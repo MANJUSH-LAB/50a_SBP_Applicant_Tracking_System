@@ -1,0 +1,94 @@
+
+Access H2 Console
+Once your app is running, go to:
+http://localhost:1111/h2-console
+-------------------------------------------
+Configure application.properties for H2
+# H2 Database Configuration
+spring.datasource.url=jdbc:h2:mem:atsdb
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.jpa.hibernate.ddl-auto=update
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+
+Use these credentials:
+
+JDBC URL: jdbc:h2:mem:atsdb
+
+Username: sa
+
+Password: (leave blank)
+-------------------------------------------
+
+ sample data and HTTP payloads for your ATS app 
+using the JobApplication entity. These examples will help you 
+test your GET, POST, and PUT endpoints using Swagger, Postman, or curl.
+# Request Payload
+----POST /applications — Create a New Job Application--------
+{
+  "candidateName": "Aarav Nair",
+  "email": "aarav.nair@example.com",
+  "resumeLink": "https://example.com/resumes/aarav.pdf",
+  "status": "Applied"
+}
+---Sample Response--------
+{
+  "id": 1,
+  "candidateName": "Aarav Nair",
+  "email": "aarav.nair@example.com",
+  "resumeLink": "https://example.com/resumes/aarav.pdf",
+  "status": "Applied"
+}
+
+--------GET /applications — Retrieve All Applications-----------------------------------
+[
+  {
+    "id": 1,
+    "candidateName": "Aarav Nair",
+    "email": "aarav.nair@example.com",
+    "resumeLink": "https://example.com/resumes/aarav.pdf",
+    "status": "Applied"
+  },
+  {
+    "id": 2,
+    "candidateName": "Meera Thomas",
+    "email": "meera.thomas@example.com",
+    "resumeLink": "https://example.com/resumes/meera.pdf",
+    "status": "Interviewing"
+  }
+]
+--------PUT /applications/{id} — Update Application Status-----------------------------------
+Request Payload (e.g., update status of ID 1)
+
+{
+  "status": "Interview Scheduled"
+}
+----Sample Response---
+
+{
+  "id": 1,
+  "candidateName": "Aarav Nair",
+  "email": "aarav.nair@example.com",
+  "resumeLink": "https://example.com/resumes/aarav.pdf",
+  "status": "Interview Scheduled"
+}
+
+------------------------------------------------------------------
+DELETE /applications/{id} — Remove an Application
+No payload needed. Just send a DELETE request to /applications/1.
+
+------Sample data.sql for H2 Initialization------
+------If you want to auto-load sample data when the app starts:--------
+
+
+
+INSERT INTO job_application (candidate_name, email, resume_link, status)
+VALUES ('Aarav Nair', 'aarav.nair@example.com', 'https://example.com/resumes/aarav.pdf', 'Applied');
+
+INSERT INTO job_application (candidate_name, email, resume_link, status)
+VALUES ('Meera Thomas', 'meera.thomas@example.com', 'https://example.com/resumes/meera.pdf', 'Interviewing');
+
+
